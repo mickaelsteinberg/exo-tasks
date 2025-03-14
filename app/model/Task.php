@@ -4,19 +4,45 @@ require_once __DIR__ . '/../dao/connexion.php';
 
 class Task
 {
+    private $pdo;
+
+    public function __construct()
+    {
+        $this->pdo = getConnexion();
+    }
+
     public function getAllTasks()
     {
-        $pdo = getConnexion();
         $sql = "SELECT * FROM tasks";
-        $stmt = $pdo->query($sql);
+        $stmt = $this->pdo->query($sql);
         
         return $stmt->fetchAll();
     }
 
     public function deleteTask($id)
     {
-        $pdo = getConnexion();
-        $sqlDelete = "DELETE FROM tasks WHERE id=$id";
-        $pdo->query($sqlDelete);
+        $sqlDelete = "DELETE FROM tasks WHERE id=:id";
+        $stmt = $this->pdo->prepare($sqlDelete);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
+
+    public function getTask($id) 
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM tasks WHERE id=:id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
+
+    public function create(string $titre, string $description, string $status)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO tasks (title, description, status) VALUES (:title, :description, :status);");
+        $stmt->bindParam(':title', $titre);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':status', $status);
+        
+        return $stmt->execute();
     }
 }
