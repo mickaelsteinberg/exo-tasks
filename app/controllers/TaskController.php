@@ -36,9 +36,7 @@ class TaskController
 
     public function createTask(string $titre, string $description, string $status)
     {
-        // Insérer les données dans le model correspondant
         $this->taskModel->create($titre, $description, $status);
-        // Rediriger l'utilisateur vers la page principale
         header('Location: /exo-tasks/');
     }
 
