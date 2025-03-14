@@ -2,7 +2,7 @@
 
 <div class="container mt-5">
     <h2>Créer une nouvelle tâche</h2>
-    <form action="?action=nouvelle-tache" method="POST">
+    <form action="?action=create" method="POST">
         <div class="mb-3">
             <label for="title" class="form-label">Titre :</label>
             <input type="text" class="form-control" id="title" name="title" required>

@@ -28,6 +28,12 @@ class TaskController
         require_once __DIR__ . '/../views/view-task.php';
     }
 
+    public function modifyTask($id) 
+    {
+        $task = $this->taskModel->getTask($id);
+        require_once __DIR__ . '/../views/modify-task.php';
+    }
+
     public function deleteTask($id) 
     {
         $this->taskModel->deleteTask($id);
@@ -40,8 +46,9 @@ class TaskController
         header('Location: /exo-tasks/');
     }
 
-    public function updateTask() 
+    public function updateTask(string $id, string $titre, string $description, string $status) 
     {
-
+        $this->taskModel->update($id, $titre, $description, $status);
+        header('Location: /exo-tasks/');
     }
 }

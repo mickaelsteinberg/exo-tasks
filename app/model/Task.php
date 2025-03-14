@@ -45,4 +45,17 @@ class Task
         
         return $stmt->execute();
     }
+
+    public function update(string $id, string $titre, string $description, string $status) 
+    {
+        $stmt = $this->pdo->prepare("UPDATE tasks 
+                    SET title = :title, description = :description, status = :status 
+                    WHERE id=:id;");
+        $stmt->bindParam(':title', $titre);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':id', $id);
+        
+        return $stmt->execute();
+    }
 }
