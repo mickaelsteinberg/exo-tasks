@@ -4,35 +4,46 @@ require_once __DIR__ . '/../model/Task.php';
 
 class TaskController 
 {
-    public function home() 
+    private $taskModel;
+    
+    public function __construct() 
     {
-        require_once __DIR__ . '/../views/home.php';
+        $this->taskModel = new Task();
+    }
+
+    public function newTask() 
+    {
+        require_once __DIR__ . '/../views/new-task.php';
     }
 
     public function listAllTasks() 
     {
-        // Appelle le modèle Task 
-        $taskModel = new Task();
-        // Récupère toutes les tâches dans le model Task
-        $tasks = $taskModel->getAllTasks();
-        // Affiche moi la vue liste-tasks.php
+        $tasks = $this->taskModel->getAllTasks();
         require_once __DIR__ . '/../views/liste-tasks.php';
+    }
+
+    public function viewTask($id) 
+    {
+        $task = $this->taskModel->getTask($id);
+        require_once __DIR__ . '/../views/view-task.php';
     }
 
     public function deleteTask($id) 
     {
-        $taskModel = new Task();
-        $taskModel->deleteTask($id);
+        $this->taskModel->deleteTask($id);
         header('Location: /exo-taches');
     }
 
-    public function createTask()
+    public function createTask(string $titre, string $description, string $status)
     {
-        // ne fait rien
+        // Insérer les données dans le model correspondant
+        $this->taskModel->create($titre, $description, $status);
+        // Rediriger l'utilisateur vers la page principale
+        header('Location: /exo-taches/');
     }
 
     public function updateTask() 
     {
-
+        
     }
 }
