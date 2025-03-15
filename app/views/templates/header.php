@@ -10,10 +10,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="?">📋 Gestion des Tâches</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="?">🏠 Accueil</a>
@@ -21,7 +18,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="?page=new-task">➕ Nouvelle Tâche</a>
                     </li>
+                    <li class="nav-item">
+                        <?php if(isset($_SESSION['username'])): ?>
+                            <a class="nav-link" href="?action=disconnect">🔐 Déconnexion</a>
+                        <?php else: ?>
+                            <a class="nav-link" href="?page=login">🔓 Connexion</a>
+                        <?php endif; ?>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <?php if(isset($_SESSION['username'])): ?>
+        <nav class="navbar navbar-light bg-light">
+            <div class="container">
+                <span class="navbar-text">
+                    Vous naviguez en tant que: <?= $_SESSION['username'] ?>
+                </span>
+            </div>
+        </nav>
+    <?php endif; ?>

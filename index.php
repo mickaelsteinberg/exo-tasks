@@ -1,8 +1,15 @@
 <?php
 
+session_start();
 require_once __DIR__ . '/app/controllers/TaskController.php';
+require_once __DIR__ . '/app/controllers/AdminController.php';
 
 $taskController = new TaskController();
+$adminController = new AdminController();
+
+if (!isset($_SESSION['username'])) {
+    $adminController->index();
+}
 
 if (isset($_GET['action']) && $_GET['action'] == 'create' && isset($_POST['title']) && !empty($_POST['title']) && isset($_POST['description']) && !empty($_POST['description']) && isset($_POST['status']) && !empty($_POST['status']) ) {
     $taskController->createTask($_POST['title'], $_POST['description'], $_POST['status']);
@@ -16,6 +23,12 @@ if (isset($_GET['action']) && $_GET['action'] == 'create' && isset($_POST['title
     $taskController->modifyTask($_GET['id']);
 } elseif (isset($_GET['page']) && $_GET['page'] === 'new-task') {
     $taskController->newTask();
+} elseif (isset($_GET['page']) && $_GET['page'] === 'login') {
+    $adminController->index();
+} elseif (isset($_GET['action']) && $_GET['action'] === 'connexion' && isset($_POST['username']) && isset($_POST['password'])) {
+    $adminController->connect($_POST['username'], $_POST['password']);
+} elseif (isset($_GET['action']) && $_GET['action'] === 'disconnect') {
+    $adminController->disconnect();
 } else {
     $taskController->listAllTasks();
 }

@@ -37,18 +37,18 @@ class TaskController
     public function deleteTask($id) 
     {
         $this->taskModel->deleteTask($id);
-        header('Location: /exo-tasks/');
+        header('Location: index.php');
     }
 
     public function createTask(string $titre, string $description, string $status)
     {
         $this->taskModel->create($titre, $description, $status);
-        header('Location: /exo-tasks/');
+        header('Location: index.php');
     }
 
     public function updateTask(string $id, string $titre, string $description, string $status) 
     {
         $this->taskModel->update($id, $titre, $description, $status);
-        header('Location: /exo-tasks/');
+        header('Location: index.php');
     }
 }
